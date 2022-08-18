@@ -1,4 +1,4 @@
-FROM --platform=${TARGETOS}/${TARGETARCH} alpine:latest
+FROM alpine:latest
 
 ARG TARGETARCH
 ARG OUTLINE_SS_VERSION=1.3.5
