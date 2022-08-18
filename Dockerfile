@@ -8,24 +8,15 @@ WORKDIR /tidalab
 
 RUN cd /tidalab
 
-RUN wget https://github.com/mikucloud/ss/releases/download/1.1/tidalab-ss-$TARGETARCH -O /tidalab/tidalab-ss
+RUN wget https://github.com/mikucloud/ss/releases/latest/download/tidalab-ss
 
-RUN case "${TARGETARCH}" in \
-    "amd64") \
-        wget "https://github.com/Jigsaw-Code/outline-ss-server/releases/download/v${OUTLINE_SS_VERSION}/outline-ss-server_${OUTLINE_SS_VERSION}_linux_x86_64.tar.gz" &&\
-		tar -xzv -C /tidalab -f outline-ss-server_${OUTLINE_SS_VERSION}_linux_x86_64.tar.gz outline-ss-server \
-        ;; \
+RUN wget "https://github.com/Jigsaw-Code/outline-ss-server/releases/download/v${OUTLINE_SS_VERSION}/outline-ss-server_${OUTLINE_SS_VERSION}_linux_x86_64.tar.gz"
 
-    "arm64") \
-        wget "https://github.com/Jigsaw-Code/outline-ss-server/releases/download/v${OUTLINE_SS_VERSION}/outline-ss-server_${OUTLINE_SS_VERSION}_linux_arm64.tar.gz" &&\
-		tar -xzv -C /tidalab -f outline-ss-server_${OUTLINE_SS_VERSION}_linux_arm64.tar.gz outline-ss-server \
-        ;; \
+RUN tar -xzv -C /tidalab -f outline-ss-server_${OUTLINE_SS_VERSION}_linux_x86_64.tar.gz outline-ss-server
     
-esac
+RUN wget https://github.com/prometheus/prometheus/releases/download/v${PROMETHEUS_VERSION}/prometheus-${PROMETHEUS_VERSION}.linux-amd64.tar.gz
 
-RUN wget https://github.com/prometheus/prometheus/releases/download/v${PROMETHEUS_VERSION}/prometheus-${PROMETHEUS_VERSION}.linux-$TARGETARCH.tar.gz
-
-RUN tar -zxf prometheus-${PROMETHEUS_VERSION}.linux-$TARGETARCH.tar.gz --strip-components 1 -C /tidalab
+RUN tar -zxf prometheus-${PROMETHEUS_VERSION}.linux-amd64.tar.gz --strip-components 1 -C /tidalab
 
 RUN chmod +x /tidalab/*
 
